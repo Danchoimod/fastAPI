@@ -1,47 +1,45 @@
+Here is the English version of your project structure and instructions, using standard professional terminology.
 
-## Cấu trúc thư mục chi tiết
-```
+Detailed Directory Structure
 fastapi-project
-├── alembic/            # Thư mục quản lý migrations
+├── alembic/            # Database migrations management < SQL only <-> Mongo no need migration>
 ├── src/
-│   ├── auth/           # Domain Authentication
+│   ├── auth/           # Authentication Domain
 │   │   ├── router.py, schemas.py, models.py, dependencies.py, config.py, 
 │   │   ├── constants.py, exceptions.py, service.py, utils.py
-│   ├── aws/            # Domain External Services (AWS)
-│   │   ├── client.py, schemas.py, config.py, constants.py, exceptions.py, utils.py
-│   ├── posts/          # Domain Posts (Đã chuyển từ items sang posts)
+│   ├── gcp/
+│   ├── posts/          # Posts Domain
 │   │   ├── router.py, schemas.py, models.py, dependencies.py, constants.py,
 │   │   ├── exceptions.py, service.py, utils.py
-│   ├── main.py         # Khởi tạo ứng dụng
-│   ├── config.py       # Cấu hình global
-│   ├── database.py     # Kết nối DB
-│   ├── models.py       # Global models
-│   ├── exceptions.py   # Global exceptions
-│   └── pagination.py   # Global pagination module
-├── tests/              # Thư mục kiểm thử (đã chia theo domain)
+│   ├── main.py         # Application entry point & initialization
+│   ├── config.py       # Global configuration settings
+│   ├── database.py     # Database connection & session management
+│   ├── models.py       # Global/Shared base models
+│   ├── exceptions.py   # Global exception handlers
+│   └── pagination.py   # Global pagination utility module
+├── tests/              # Test suite (organized by domain)
 │   ├── auth/
-│   ├── aws/
+│   ├── aws/ < this project used google cloud instead of aws 
 │   └── posts/
-├── templates/          # Thư mục chứa giao diện (HTML)
+├── templates/          # Frontend templates (HTML)
 │   └── index.html
-├── requirements/       # Quản lý thư viện
+├── requirements/       # Dependency management
 │   ├── base.txt, dev.txt, prod.txt
-├── .env
-├── .gitignore
-├── logging.ini
-└── alembic.ini
-```
+├── .env                # Environment variables
+├── .gitignore          # Git ignore file
+├── logging.ini         # Logging configuration
+└── alembic.ini         # Alembic migration configuration
+Getting Started
+1. Install Dependencies
+Choose the appropriate requirements file for your environment:
 
-## Cách chạy dự án
+Bash
+pip install -r requirements/dev.txt
+2. Run the Application
+Start the development server using Uvicorn:
 
-1. **Cài đặt thư viện:**
-   ```bash
-   pip install -r requirements/dev.txt
-   ```
-
-2. **Chạy ứng dụng:**
-   ```bash
-   uvicorn src.main:app --reload
-   ```
-
-3. **Tài liệu API:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+Bash
+uvicorn src.main:app --reload
+3. API Documentation
+Once the server is running, you can access the interactive Swagger UI at:
+http://127.0.0.1:8000/docs

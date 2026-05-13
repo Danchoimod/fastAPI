@@ -1,10 +1,18 @@
-# Database connection setup (e.g. SQLAlchemy engine, Motor client for MongoDB)
-# Example for a generic placeholder:
+from motor.motor_asyncio import AsyncIOMotorClient
+from src.config import settings
 
-def get_db():
-    # Yield database session
-    db = "Database Session"
-    try:
-        yield db
-    finally:
-        pass
+class Database:
+    client: AsyncIOMotorClient = None
+
+db = Database()
+
+async def get_db():
+    return db.client[settings.MONGODB_DB_NAME]
+
+async def connect_to_mongo():
+    db.client = AsyncIOMotorClient(settings.MONGODB_URL)
+    print("Connected to MongoDB")
+
+async def close_mongo_connection():
+    db.client.close()
+    print("Closed MongoDB connection")
