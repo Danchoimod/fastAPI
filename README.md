@@ -1,4 +1,3 @@
-
 Detailed Directory Structure
 fastapi-project
 ├── alembic/            # Database migrations management < SQL only <-> Mongo no need migration>
@@ -29,16 +28,18 @@ fastapi-project
 ├── logging.ini         # Logging configuration
 └── alembic.ini         # Alembic migration configuration
 Getting Started
-1. Install Dependencies
+### 1. Install Dependencies
 Choose the appropriate requirements file for your environment:
 
-Bash
+```bash
 pip install -r requirements/dev.txt
-2. Run the Application
+```
+### 2. Run the Application
 Start the development server using Uvicorn:
 
-Bash
+```bash
 uvicorn src.main:app --reload
-3. API Documentation
+```
+### 3. API Documentation
 Once the server is running, you can access the interactive Swagger UI at:
-http://127.0.0.1:8000/docs
+[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
