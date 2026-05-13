@@ -1,14 +1,16 @@
-Detailed Directory Structure
+## Project Structure
+
+```text
 fastapi-project
-├── alembic/            # Database migrations management < SQL only <-> Mongo no need migration>
+├── alembic/            # Database migrations management (SQL only, Mongo does not need)
 ├── src/
 │   ├── auth/           # Authentication Domain
 │   │   ├── router.py, schemas.py, models.py, dependencies.py, config.py, 
-│   │   ├── constants.py, exceptions.py, service.py, utils.py
-│   ├── gcp/
+│   │   └── constants.py, exceptions.py, service.py, utils.py
+│   ├── gcp/            # Google Cloud Platform Domain
 │   ├── posts/          # Posts Domain
 │   │   ├── router.py, schemas.py, models.py, dependencies.py, constants.py,
-│   │   ├── exceptions.py, service.py, utils.py
+│   │   └── exceptions.py, service.py, utils.py
 │   ├── main.py         # Application entry point & initialization
 │   ├── config.py       # Global configuration settings
 │   ├── database.py     # Database connection & session management
@@ -17,10 +19,11 @@ fastapi-project
 │   └── pagination.py   # Global pagination utility module
 ├── tests/              # Test suite (organized by domain)
 │   ├── auth/
-│   ├── aws/ < this project used google cloud instead of aws 
+│   ├── gcp/            # Formerly AWS, now using GCP
 │   └── posts/
 ├── templates/          # Frontend templates (HTML)
 │   └── index.html
+```
 ├── requirements/       # Dependency management
 │   ├── base.txt, dev.txt, prod.txt
 ├── .env                # Environment variables
