@@ -23,13 +23,13 @@ fastapi-project
 │   └── posts/
 ├── templates/          # Frontend templates (HTML)
 │   └── index.html
-```
 ├── requirements/       # Dependency management
 │   ├── base.txt, dev.txt, prod.txt
 ├── .env                # Environment variables
 ├── .gitignore          # Git ignore file
 ├── logging.ini         # Logging configuration
 └── alembic.ini         # Alembic migration configuration
+```
 Getting Started
 ### 1. Install Dependencies
 Choose the appropriate requirements file for your environment:
