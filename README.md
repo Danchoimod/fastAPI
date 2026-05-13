@@ -1,4 +1,3 @@
-Here is the English version of your project structure and instructions, using standard professional terminology.
 
 Detailed Directory Structure
 fastapi-project
