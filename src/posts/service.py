@@ -1,10 +1,18 @@
-from src.posts.schemas import PostCreate
+from src.posts.schemas import PostCreate, Post
+from src.database import get_db
+from bson import ObjectId
 
+# đây là nơi nghiệp vụ , lẫn truy vấn @Service
 class PostService:
-    def get_post(self, post_id: int):
-        return {"id": post_id, "title": "Sample Post", "description": "Domain-based logic"}
+    async def get_post(self, post_id: str):
+        db = await get_db()
+        post = await db["posts"].find_one({"_id": ObjectId(post_id)})
+        return post
 
-    def create_post(self, post: PostCreate):
-        return {"id": 1, **post.dict()}
+    async def create_post(self, post: PostCreate):
+        db = await get_db()
+        post_data = post.dict()
+        await db["posts"].insert_one(post_data)
+        return post_data
 
 post_service = PostService()
