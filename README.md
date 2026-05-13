@@ -1,6 +1,3 @@
-# FastAPI Project Structure (Best Practices)
-
-Chào bạn! Dự án đã được thiết lập đầy đủ 100% theo đúng sơ đồ **FastAPI Best Practices** mà bạn cung cấp.
 
 ## Cấu trúc thư mục chi tiết
 ```
