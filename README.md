@@ -1,16 +1,16 @@
-Here is the English version of your project structure and instructions, using standard professional terminology.
+## Project Structure
 
-Detailed Directory Structure
+```text
 fastapi-project
-├── alembic/            # Database migrations management < SQL only <-> Mongo no need migration>
+├── alembic/            # Database migrations management (SQL only, Mongo does not need)
 ├── src/
 │   ├── auth/           # Authentication Domain
 │   │   ├── router.py, schemas.py, models.py, dependencies.py, config.py, 
-│   │   ├── constants.py, exceptions.py, service.py, utils.py
-│   ├── gcp/
+│   │   └── constants.py, exceptions.py, service.py, utils.py
+│   ├── gcp/            # Google Cloud Platform Domain
 │   ├── posts/          # Posts Domain
 │   │   ├── router.py, schemas.py, models.py, dependencies.py, constants.py,
-│   │   ├── exceptions.py, service.py, utils.py
+│   │   └── exceptions.py, service.py, utils.py
 │   ├── main.py         # Application entry point & initialization
 │   ├── config.py       # Global configuration settings
 │   ├── database.py     # Database connection & session management
@@ -19,10 +19,11 @@ fastapi-project
 │   └── pagination.py   # Global pagination utility module
 ├── tests/              # Test suite (organized by domain)
 │   ├── auth/
-│   ├── aws/ < this project used google cloud instead of aws 
+│   ├── gcp/            # Formerly AWS, now using GCP
 │   └── posts/
 ├── templates/          # Frontend templates (HTML)
 │   └── index.html
+```
 ├── requirements/       # Dependency management
 │   ├── base.txt, dev.txt, prod.txt
 ├── .env                # Environment variables
@@ -30,16 +31,18 @@ fastapi-project
 ├── logging.ini         # Logging configuration
 └── alembic.ini         # Alembic migration configuration
 Getting Started
-1. Install Dependencies
+### 1. Install Dependencies
 Choose the appropriate requirements file for your environment:
 
-Bash
+```bash
 pip install -r requirements/dev.txt
-2. Run the Application
+```
+### 2. Run the Application
 Start the development server using Uvicorn:
 
-Bash
+```bash
 uvicorn src.main:app --reload
-3. API Documentation
+```
+### 3. API Documentation
 Once the server is running, you can access the interactive Swagger UI at:
-http://127.0.0.1:8000/docs
+[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)

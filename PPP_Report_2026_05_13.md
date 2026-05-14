@@ -12,4 +12,4 @@ JWT Authentication Deployment: Migrate the user security system to FastAPI depen
 System-wide Error Handling Standardization: Implement Global Exception Handlers to ensure consistent API responses across the application.
 
 ⚠️ Problems
-Delayed Auth/GCP Implementation: The auth and gcp domains currently consist of empty directories. These require immediate priority to integrate core features.
+Python & FastAPI Learning Curve: currently I am adapting to Python and the FastAPI framework, which impacts the initial development.

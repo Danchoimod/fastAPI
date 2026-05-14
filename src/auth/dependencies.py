@@ -1,4 +1,5 @@
 #@PreAuthorize
+#Spring Security / Bean Config
 async def admin_required(current_user: User = Depends(get_current_user)):
     if current_user.role != "ADMIN":
         raise HTTPException(

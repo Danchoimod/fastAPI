@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Auth - FastAPI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="/static/css/tailwind.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md glass rounded-[2rem] p-8 shadow-2xl animate-fadeIn">
+        
+        <!-- Login Form -->
+        <div id="login-container">
+            <h1 class="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                Welcome Back
+            </h1>
+            <p class="text-slate-400 text-center text-sm mb-8">Enter your credentials to access your account</p>
+            
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 text-left">Username</label>
+                    <input type="text" id="login-username" class="input-field" placeholder="johndoe" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 text-left">Password</label>
+                    <input type="password" id="login-password" class="input-field" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    Sign In
+                </button>
+            </form>
+            
+            <p class="text-center text-sm text-slate-400 mt-6">
+                Don't have an account? <a href="#" id="show-register" class="text-indigo-400 font-semibold hover:underline">Sign up</a>
+            </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-container" class="hidden">
+            <h1 class="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                Create Account
+            </h1>
+            <p class="text-slate-400 text-center text-sm mb-8">Join our community and start building</p>
+            
+            <form id="register-form" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 text-left">Username</label>
+                    <input type="text" id="reg-username" class="input-field" placeholder="johndoe" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 text-left">Email Address</label>
+                    <input type="email" id="reg-email" class="input-field" placeholder="john@example.com" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 text-left">Password</label>
+                    <input type="password" id="reg-password" class="input-field" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    Create Account
+                </button>
+            </form>
+            
+            <p class="text-center text-sm text-slate-400 mt-6">
+                Already have an account? <a href="#" id="show-login" class="text-primary font-semibold hover:underline">Sign in</a>
+            </p>
+        </div>
+
+        <!-- Notification Message -->
+        <div id="message" class="hidden mt-6 p-4 rounded-xl text-sm text-center border"></div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+</body>
+</html>
