@@ -3,7 +3,7 @@ from src.auth.models import User
 from src.auth.schemas import UserCreate
 from src.auth.utils import hash_password, verify_password
 from fastapi import HTTPException, status
-
+#Jpas 
 async def register_user(user_in: UserCreate):
     db = await get_db()
     
@@ -27,7 +27,7 @@ async def register_user(user_in: UserCreate):
     user_dict["_id"] = result.inserted_id
     
     return User(**user_dict)
-
+# login 
 async def authenticate_user(username: str, password: str):
     db = await get_db()
     user = await db["users"].find_one({"username": username})

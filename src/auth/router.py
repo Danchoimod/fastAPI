@@ -18,4 +18,5 @@ async def login(user_in: UserLogin):
             headers={"WWW-Authenticate": "Bearer"},
             #thiết lập login bằng cookie
         )
-    return {"message": "Login successful", "user": user.username}
+    return {"message": "Login successful", "user": user.username, "user_id": str(user.id)}
+
