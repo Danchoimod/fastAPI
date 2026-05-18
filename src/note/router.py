@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
-from src.note.schemas import NoteCreate, Note, NoteUpdate, NoteSummary, NoteDetail
+from src.note.models import Note
+from src.note.schemas import NoteCreate, NoteUpdate, NoteSummary, NoteDetail
 from src.note import service
 from typing import List
 

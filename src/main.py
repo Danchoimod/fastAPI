@@ -41,6 +41,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from src.gemini.router import router as gemini_router
+
 # Setup templates
 templates = Jinja2Templates(directory="templates")
 
@@ -50,3 +52,5 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(note_router, prefix=f"{settings.API_V1_STR}/notes", tags=["notes"])
 
 app.include_router(auth_router, prefix=settings.API_V1_STR)
+
+app.include_router(gemini_router, prefix=f"{settings.API_V1_STR}/gemini", tags=["gemini"])

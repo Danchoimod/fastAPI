@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from src.models import GlobalBaseModel
-from src.note.models import ItemType
+from src.note.models import ItemType, Note, NoteItem
 
 class NoteItemBase(BaseModel):
     type: ItemType = ItemType.TEXT
@@ -20,13 +20,6 @@ class NoteItemUpdate(BaseModel):
     order: Optional[int] = None
     status: Optional[int] = None
 
-class NoteItem(NoteItemBase, GlobalBaseModel):
-    note_id: str
-    owner_id: str
-    status: int
-    created_at: float
-    updated_at: float
-
 class NoteBase(BaseModel):
     title: Optional[str] = Field(None, description="Tiêu đề ghi chú")
     order: int = 0
@@ -41,12 +34,6 @@ class NoteUpdate(BaseModel):
     order: Optional[int] = None
     items: Optional[List[NoteItemBase]] = None
 
-class Note(NoteBase, GlobalBaseModel):
-    owner_id: str
-    status: int
-    created_at: float
-    updated_at: float
-
 class NoteSummary(GlobalBaseModel):
     title: Optional[str] = None
     order: int = 0
@@ -55,3 +42,4 @@ class NoteSummary(GlobalBaseModel):
 
 class NoteDetail(Note):
     items: List[NoteItem] = Field(default_factory=list)
+
