@@ -19,3 +19,8 @@ class UserResponse(UserBase):
 
     class Config:
         from_attributes = True
+
+class UserAdminUpdate(BaseModel):
+    role: Optional[str] = None
+    is_active: Optional[bool] = None
+

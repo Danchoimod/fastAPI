@@ -4,6 +4,9 @@ from src.auth.schemas import UserCreate
 from src.auth.utils import hash_password, verify_password
 from fastapi import HTTPException, status
 import time
+from typing import List, Optional
+from bson import ObjectId
+from bson.errors import InvalidId
 
 # CÁC DỊCH VỤ NGHIỆP VỤ CHÍNH (USER SERVICES)
 
@@ -73,3 +76,42 @@ async def verify_stored_refresh_token(token: str) -> bool:
     db = await get_db()
     stored = await db["refresh_tokens"].find_one({"token": token, "is_revoked": False})
     return stored is not None
+
+# QUẢN TRỊ NGƯỜI DÙNG (ADMIN SERVICES)
+
+async def get_all_users() -> List[User]:
+    """
+    Lấy danh sách toàn bộ người dùng trong hệ thống
+    """
+    db = await get_db()
+    cursor = db["users"].find()
+    users = await cursor.to_list(length=1000)
+    return [User(**u) for u in users]
+
+async def update_user_by_admin(
+    user_id: str, 
+    role: Optional[str] = None, 
+    is_active: Optional[bool] = None
+) -> Optional[User]:
+    """
+    Cập nhật vai trò hoặc trạng thái hoạt động của người dùng khác
+    """
+    db = await get_db()
+    try:
+        obj_id = ObjectId(user_id)
+    except (InvalidId, TypeError):
+        return None
+
+    update_data = {}
+    if role is not None:
+        update_data["role"] = role
+    if is_active is not None:
+        update_data["is_active"] = is_active
+
+    if update_data:
+        await db["users"].update_one({"_id": obj_id}, {"$set": update_data})
+
+    user_dict = await db["users"].find_one({"_id": obj_id})
+    if not user_dict:
+        return None
+    return User(**user_dict)

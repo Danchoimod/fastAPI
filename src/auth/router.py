@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
-from src.auth.schemas import UserCreate, UserLogin, UserResponse
+from src.auth.schemas import UserCreate, UserLogin, UserResponse, UserAdminUpdate
 from src.auth import service
 from src.auth.utils import create_access_token, create_refresh_token, decode_refresh_token
 from src.config import settings
+from src.auth.dependencies import admin_required
+from typing import List
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -133,4 +135,41 @@ async def logout(request: Request, response: Response):
     response.delete_cookie(key="refresh_token", path="/api/v1/auth", secure=True, samesite="lax")
     
     return {"message": "Đăng xuất thành công"}
+
+# QUẢN TRỊ NGƯỜI DÙNG (ADMIN ENDPOINTS)
+
+@router.get("/users", response_model=List[UserResponse], tags=["User Management"])
+async def list_users(current_admin = Depends(admin_required)):
+    """
+    [Admin Only] Lấy danh sách toàn bộ tài khoản người dùng trong hệ thống.
+    """
+    return await service.get_all_users()
+
+@router.patch("/users/{user_id}", response_model=UserResponse, tags=["User Management"])
+async def update_user(
+    user_id: str,
+    update_in: UserAdminUpdate,
+    current_admin = Depends(admin_required)
+):
+    """
+    [Admin Only] Khóa/mở khóa tài khoản (is_active) hoặc thay đổi quyền (role) của người dùng khác.
+    """
+    # Ngăn chặn Admin tự khóa hoặc hạ quyền của chính mình
+    if str(current_admin.id) == user_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bạn không thể tự thay đổi quyền hoặc khóa tài khoản của chính mình"
+        )
+        
+    updated_user = await service.update_user_by_admin(
+        user_id=user_id,
+        role=update_in.role,
+        is_active=update_in.is_active
+    )
+    if not updated_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Không tìm thấy người dùng cần cập nhật"
+        )
+    return updated_user
 

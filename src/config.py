@@ -9,14 +9,14 @@ class Settings(BaseSettings):
     MONGODB_DB_NAME: str
 
     # JWT Authentication Settings
-    JWT_SECRET_KEY: str = "your_super_secret_jwt_access_key_123!@#"
-    JWT_REFRESH_SECRET_KEY: str = "your_super_secret_jwt_refresh_key_456$%^"
+    JWT_SECRET_KEY: str
+    JWT_REFRESH_SECRET_KEY: str
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # Gemini AI API Settings
-    GEMINI_API_KEY: str = "AIzaSyBLWuREhqEFmCQJGMLA5NTZ47EFaLN41FU"
+    GEMINI_API_KEY: str
     GEMINI_MODEL: str = "gemini-3.1-flash-lite-preview"
 
     @field_validator("DEBUG", mode="before")
