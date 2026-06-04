@@ -1,23 +1,35 @@
 import os
 import uuid
+import json
 from google.cloud import storage
+from google.oauth2 import service_account
 from src.config import settings
 
 class GCSService:
     def __init__(self):
-        self.credentials_path = settings.GCS_CREDENTIALS_FILE
         self.bucket_name = settings.GCS_BUCKET_NAME
         self.client = None
         self.bucket = None
-        
-        # Initialize client
-        if os.path.exists(self.credentials_path):
-            try:
-                self.client = storage.Client.from_service_account_json(self.credentials_path)
-            except Exception as e:
-                print(f"Error connecting to GCS: {e}")
-        else:
-            print(f"GCS credentials file not found at: {self.credentials_path}")
+
+        try:
+            # Ưu tiên 1: GCS_CREDENTIALS_JSON (chuỗi JSON) — dùng cho Cloud Run
+            if settings.GCS_CREDENTIALS_JSON:
+                info = json.loads(settings.GCS_CREDENTIALS_JSON)
+                credentials = service_account.Credentials.from_service_account_info(info)
+                self.client = storage.Client(credentials=credentials, project=info.get("project_id"))
+                print("GCS initialized from JSON env var")
+
+            # Ưu tiên 2: GCS_CREDENTIALS_FILE (đường dẫn file) — dùng cho local/docker-compose
+            elif settings.GCS_CREDENTIALS_FILE and os.path.isfile(settings.GCS_CREDENTIALS_FILE):
+                self.client = storage.Client.from_service_account_json(settings.GCS_CREDENTIALS_FILE)
+                print("GCS initialized from credentials file")
+
+            else:
+                print("GCS: No valid credentials found. Upload/delete will not work.")
+
+        except Exception as e:
+            print(f"Error connecting to GCS: {e}")
+
 
     def _ensure_bucket(self):
         if not self.client:

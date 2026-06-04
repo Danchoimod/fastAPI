@@ -41,9 +41,8 @@ COPY logging.ini logging.ini
 # Tạo thư mục để mount GCS credentials file từ host
 RUN mkdir -p /app/credentials
 
-# Expose port 8000
-EXPOSE 8000
+# Expose port - Cloud Run sẽ inject biến PORT (thường 8080), local mặc định 8000
+EXPOSE 8080
 
-# Chạy ứng dụng với uvicorn ở chế độ production
-# Lưu ý: --reload không nên dùng trong môi trường production
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Dùng shell form để đọc biến $PORT từ môi trường (Cloud Run yêu cầu)
+CMD uvicorn src.main:app --host 0.0.0.0 --port ${PORT:-8000}
