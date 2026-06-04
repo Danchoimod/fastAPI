@@ -19,6 +19,16 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str
     GEMINI_MODEL: str = "gemini-3.1-flash-lite-preview"
 
+    # SMTP Settings
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: str
+    SMTP_PASSWORD: str
+
+    # GCS Settings
+    GCS_CREDENTIALS_FILE: str
+    GCS_BUCKET_NAME: str
+
     @field_validator("DEBUG", mode="before")
     @classmethod
     def parse_debug(cls, value):
@@ -29,6 +39,13 @@ class Settings(BaseSettings):
             if normalized in {"debug", "development", "dev"}:
                 return True
 
+        return value
+
+    @field_validator("GEMINI_API_KEY", mode="before")
+    @classmethod
+    def clean_api_key(cls, value):
+        if isinstance(value, str):
+            return value.strip("'\" ")
         return value
 
     class Config:

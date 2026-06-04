@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
-from src.auth.schemas import UserCreate, UserLogin, UserResponse, UserAdminUpdate
+from src.auth.schemas import UserCreate, UserLogin, UserResponse, UserAdminUpdate, ForgotPasswordRequest, ResetPasswordRequest
 from src.auth import service
 from src.auth.utils import create_access_token, create_refresh_token, decode_refresh_token
 from src.config import settings
@@ -135,6 +135,20 @@ async def logout(request: Request, response: Response):
     response.delete_cookie(key="refresh_token", path="/api/v1/auth", secure=True, samesite="lax")
     
     return {"message": "Đăng xuất thành công"}
+
+@router.post("/forgot-password")
+async def forgot_password(payload: ForgotPasswordRequest):
+    await service.generate_and_send_otp(payload.email)
+    return {"message": "Mã OTP đặt lại mật khẩu đã được gửi đến email của bạn"}
+
+@router.post("/reset-password")
+async def reset_password(payload: ResetPasswordRequest):
+    await service.verify_otp_and_reset_password(
+        email=payload.email,
+        otp=payload.otp,
+        new_password=payload.new_password
+    )
+    return {"message": "Đặt lại mật khẩu thành công. Vui lòng đăng nhập bằng mật khẩu mới."}
 
 # QUẢN TRỊ NGƯỜI DÙNG (ADMIN ENDPOINTS)
 
