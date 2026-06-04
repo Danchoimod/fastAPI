@@ -42,7 +42,7 @@ COPY logging.ini logging.ini
 RUN mkdir -p /app/credentials
 
 # Expose port - Cloud Run sẽ inject biến PORT (thường 8080), local mặc định 8000
-EXPOSE 8080
+EXPOSE 8000
 
 # Dùng shell form để đọc biến $PORT từ môi trường (Cloud Run yêu cầu)
 CMD uvicorn src.main:app --host 0.0.0.0 --port ${PORT:-8000}
