@@ -26,7 +26,10 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: str
 
     # GCS Settings
-    GCS_CREDENTIALS_FILE: str
+    # Ưu tiên dùng GCS_CREDENTIALS_JSON (chuỗi JSON) cho Cloud Run
+    # Hoặc GCS_CREDENTIALS_FILE (đường dẫn file) cho local / docker-compose
+    GCS_CREDENTIALS_FILE: str = ""
+    GCS_CREDENTIALS_JSON: str = ""
     GCS_BUCKET_NAME: str
 
     @field_validator("DEBUG", mode="before")
