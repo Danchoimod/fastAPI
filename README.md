@@ -30,6 +30,7 @@ fastapi-project
 ├── .gitignore          # Git ignore file
 ├── logging.ini         # Logging configuration
 └── alembic.ini         # Alembic migration configuration
+```
 Getting Started
 ### 1. Install Dependencies
 Choose the appropriate requirements file for your environment:
