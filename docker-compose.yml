@@ -1,0 +1,57 @@
+# Docker Compose để chạy backend dễ dàng trong môi trường development / production
+
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aura-notes-api
+    ports:
+      - "8000:8000"
+    environment:
+      # Biến môi trường ứng dụng
+      - PROJECT_NAME=Aura Notes API
+      - DEBUG=False
+      - API_V1_STR=/api/v1
+
+      # MongoDB
+      - MONGODB_URL=${MONGODB_URL}
+      - MONGODB_DB_NAME=${MONGODB_DB_NAME}
+
+      # JWT
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_REFRESH_SECRET_KEY=${JWT_REFRESH_SECRET_KEY}
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=15
+      - REFRESH_TOKEN_EXPIRE_DAYS=7
+
+      # Gemini AI
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.1-flash-lite-preview}
+
+      # SMTP
+      - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+
+      # Google Cloud Storage
+      - GCS_CREDENTIALS_FILE=/app/credentials/gcs-key.json
+      - GCS_BUCKET_NAME=${GCS_BUCKET_NAME:-notebookas}
+
+    volumes:
+      # Mount GCS credentials file từ host vào container (an toàn, không hardcode vào image)
+      - ../fluted-cogency-463817-q0-fb9cb4e4c410.json:/app/credentials/gcs-key.json:ro
+      # Mount logging config
+      - ./logging.ini:/app/logging.ini:ro
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/openapi.json')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
