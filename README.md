@@ -21,8 +21,9 @@ fastapi-project
 │   ├── auth/
 │   ├── gcp/            # Formerly AWS, now using GCP
 │   └── posts/
-├── templates/          # Frontend templates (HTML)
+├── templates/          # Frontend templates (not use)
 │   └── index.html
+```
 ├── requirements/       # Dependency management
 │   ├── base.txt, dev.txt, prod.txt
 ├── .env                # Environment variables

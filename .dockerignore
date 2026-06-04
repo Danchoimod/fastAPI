@@ -1,0 +1,50 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.Python
+
+# Môi trường ảo
+.venv/
+venv/
+env/
+ENV/
+
+# Git
+.git/
+.gitignore
+
+# Biến môi trường (KHÔNG đưa vào image)
+.env
+.env.*
+
+# Credentials (KHÔNG đưa vào image - mount khi chạy)
+*.json
+
+# Test files
+tests/
+test_*.py
+*.test.py
+
+# IDE
+.idea/
+.vscode/
+
+# Markdown / Docs
+*.md
+Example.md
+NOTE.md
+Progress_*.md
+README*.md
+Require_report.md
+SpringConvertPy.md
+
+# Thư mục logs
+*.log
+
+# Docker files (không cần trong container)
+Dockerfile
+.dockerignore
+docker-compose*.yml
