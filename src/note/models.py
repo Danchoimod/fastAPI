@@ -7,6 +7,7 @@ class ItemType(str, Enum):
     TEXT = "text"
     TODO = "todo"
     IMAGE = "image"
+    TABLE = "table"
 
 # Entity NoteItem: Đại diện cho cấu trúc lưu dưới Database
 class NoteItem(GlobalBaseModel):
